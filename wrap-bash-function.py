@@ -2,18 +2,25 @@
 
 import argparse
 import sys
+import subprocess
+
+
+def call_zim_journals_list(date):
+    # https://stackoverflow.com/questions/5826427/can-a-python-script-execute-a-function-inside-a-bash-script
+    wrapped_call = '. /home/robla/src/aliases/dot.aliases; {} {}'.format(
+        'zimchanges-journals-list', date)
+    print(wrapped_call)
+    out_bytes = subprocess.check_output(['bash', '-c', wrapped_call])
+    # https://stackoverflow.com/questions/606191/convert-bytes-to-a-python-string
+    return out_bytes.decode('utf8')
 
 
 def parse_arguments():
     """ see http://docs.python.org/library/argparse """
     parser = argparse.ArgumentParser(
-        description='A program that uses argparse')
-    parser.add_argument('--url', dest='url', type=str, help='a url that might be interesting')
-    parser.add_argument('files', help='some files, of which there may not be any', 
-        nargs='*', default=None)
-    parser.add_argument('-b', '--bmybaby',
-                    help='be my...be my baby',
-                    action="store_true")
+        description='Wrapping a bash function')
+    parser.add_argument('date', help='a date to pass to function',
+                        nargs='?', default='')
     return parser.parse_args()
 
 
@@ -21,17 +28,10 @@ def main(argv=None):
     """ A program that uses argparse """
 
     args = parse_arguments()
-    print("== args.url ==")
-    print(args.url)
+    output = call_zim_journals_list(args.date)
+    print(output)
 
-    print("== args.files ==")
-    print(args.files)
-
-    print("== args.bmybaby ==")
-    print(args.bmybaby)
 
 if __name__ == '__main__':
     exit_status = main(sys.argv)
     sys.exit(exit_status)
-
-
