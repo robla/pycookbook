@@ -7,8 +7,10 @@ import subprocess
 
 def call_zim_journals_list(date):
     # https://stackoverflow.com/questions/5826427/can-a-python-script-execute-a-function-inside-a-bash-script
-    wrapped_call = '. /home/robla/src/aliases/dot.aliases; {} {}'.format(
-        'zimchanges-journals-list', date)
+    funcfile = '/home/robla/src/aliases/dot.aliases'
+    funcname = 'zimchanges-journals-list'
+    funcarg = date
+    wrapped_call = '. {}; {} {}'.format(funcfile, funcname, funcarg)
     print(wrapped_call)
     out_bytes = subprocess.check_output(['bash', '-c', wrapped_call])
     # https://stackoverflow.com/questions/606191/convert-bytes-to-a-python-string
