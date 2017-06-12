@@ -9,9 +9,9 @@ def parse_arguments():
     parser = argparse.ArgumentParser(
         description='A program that uses argparse')
     parser.add_argument('infile', help='input file')
-    parser.add_argument('outfile', help='output file', default='-')
-    parser.add_argument('--oldstring', '-o', help='original file')
-    parser.add_argument('--newstring', '-n', help='new string to use')
+    parser.add_argument('outfile', help='output file', nargs='?', default=None)
+    parser.add_argument('--oldstring', '-o', help='original string', default='')
+    parser.add_argument('--newstring', '-n', help='new string to use', default='')
     return parser.parse_args()
 
 
@@ -53,9 +53,11 @@ def main(argv=None):
     filedata = filedata.replace(args.oldstring, args.newstring)
 
     # Write the file out again
-    with open(args.outfile, 'w') as file:
-        file.write(filedata)
-
+    if args.outfile:
+        with open(args.outfile, 'w') as file:
+            h.write(filedata)
+    else:
+        sys.stdout.write(filedata)
 
 if __name__ == '__main__':
     exit_status = main(sys.argv)
