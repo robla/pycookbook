@@ -5,7 +5,7 @@ def sloppymkdir(dirname):
     try:
         os.mkdir(dirname)
     except FileExistsError:
-        pass
+        print('You have ' + dirname + ' already')
 
 sloppymkdir('/tmp/f1')
 sloppymkdir('/tmp/f1/targ1')
@@ -29,7 +29,11 @@ symlinkdir = '/tmp/f1/tags-repo'
 # platforms that don't support os.O_DIRECTORY)
 symlinkdir_fd = os.open(symlinkdir, os.O_DIRECTORY)
 
-os.symlink(symlinkvalue, symlinkfilename, dir_fd=symlinkdir_fd)
+try:
+    os.symlink(symlinkvalue, symlinkfilename, dir_fd=symlinkdir_fd)
+except FileExistsError:
+    print('You have ' + symlinkfilename + ' already')
+
 
 # The result:
 #  /tmp/f1/tags-repo$ ls -l
