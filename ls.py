@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
-
+"""
+Get file listing of pwd in a scriptable way (instead of parsing
+output of ls)
+"""
 import argparse
 import sys
-
-
-def parse_arguments():
-    """ see http://docs.python.org/library/argparse """
-    parser = argparse.ArgumentParser(
-        description='Get a file listing in a more scriptable way')
-    parser.add_argument('files', help='some files, of which there may not be any',
-                        nargs='*', default=['.'])
-    return parser.parse_args()
 
 
 def ls(files=['.']):
@@ -26,8 +20,13 @@ def ls(files=['.']):
 
 
 def main(argv=None):
-    """ A program that uses argparse """
-    args = parse_arguments()
+    """ Parse arguments and call ls() """
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('files', help='some files, of which there may not be any',
+                        nargs='*', default=['.'])
+    args = parser.parse_args()
+
     ls(args.files)
 
 
