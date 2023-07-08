@@ -1,6 +1,5 @@
-#!/usr/bin/python2.7 -u
-import sys
+#!/usr/bin/env python3
 import random
 
 num = random.randint(0, 100000)
-print("%i" % num)
+print(f"{num:05}")
