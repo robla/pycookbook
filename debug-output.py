@@ -12,3 +12,18 @@ except TypeError:
     print("thingtoprint is not JSON serializable")
     import pprint
     pprint.pprint(thingtoprint)
+
+
+def example_function():
+    pass
+
+# Debugging tool for times when one needs to print all of the global functions
+def list_all_gfuncs():
+    global_namespace = globals()
+    global_functions = [name for name, obj in global_namespace.items() if callable(obj)]
+    retval = ''
+    for i, func in enumerate(global_functions):
+        retval += f"  {i}->{func}\n"
+    return(retval) 
+
+
